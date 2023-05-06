@@ -31,7 +31,7 @@ class UserBasedCF():
         trainSet_len = 0
         testSet_len = 0
         for line in self.load_file(filename):
-            user, movie, rating, timestamp = line.split(',')
+            user, movie, rating, timestamp = line.split('\t')
             if random.random() < pivot:
                 self.trainSet.setdefault(user, {})
                 self.trainSet[user][movie] = rating
@@ -118,6 +118,13 @@ class UserBasedCF():
         # 覆盖率
         all_rec_movies = set()
 
+        for i, user in enumerate(self.trainSet):
+             rec_movies = self.recommend(user)
+             i = i+1
+             print("为用户",user,"推荐的电影有：",rec_movies)
+             if i>=12:
+                 break
+
         for i, user, in enumerate(self.trainSet):
             test_movies = self.testSet.get(user, {})
             rec_movies = self.recommend(user)
@@ -135,8 +142,9 @@ class UserBasedCF():
 
 
 if __name__ == '__main__':
-    rating_file = 'D:\\学习资料\\推荐系统\\ml-latest-small\\ratings.csv'
+    rating_file = 'E:\\code\\PycharmProjects\\MovieRecommendation\\ml-100k\\u.data'
     userCF = UserBasedCF()
     userCF.get_dataset(rating_file)
     userCF.calc_user_sim()
     userCF.evaluate()
+    print('推荐算法执行完成，数据已保存')
