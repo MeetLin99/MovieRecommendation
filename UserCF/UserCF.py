@@ -121,9 +121,9 @@ class UserBasedCF():
         for i, user in enumerate(self.trainSet):
              rec_movies = self.recommend(user)
              i = i+1
-             print("为用户",user,"推荐的电影有：",rec_movies)
-             if i>=12:
-                 break
+             print("Userid",user,"\tRecommended movie:",rec_movies)
+             # if i>=21:
+             #     break
 
         for i, user, in enumerate(self.trainSet):
             test_movies = self.testSet.get(user, {})
@@ -147,4 +147,4 @@ if __name__ == '__main__':
     userCF.get_dataset(rating_file)
     userCF.calc_user_sim()
     userCF.evaluate()
-    print('推荐算法执行完成，数据已保存')
+    print('success!')
